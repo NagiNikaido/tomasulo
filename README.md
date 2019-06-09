@@ -109,6 +109,10 @@ No.     Issue  Exec  WriteBack
 
 模拟器中为实现方便，将`F32`用作pc，`Cycle`计数从0开始。`Regs`显示的为实际寄存器的值，而寄存器状态值由于重命名之后已被替换成了`Station`编号未记录。
 
+## 测试用例
+
+`test[0-2].nel`为既有测例。`test3.nel`为计算1-100和的测试用例，输出寄存器为`F2`和`F5`。`test4.nel`为前者的简化版，用于测试功能部件少于保留站时FIFO的特性。
+
 ## 如有问题？
 
 可邮件联系tdl16@mails.tsinghua.edu.cn。
