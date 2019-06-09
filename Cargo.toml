@@ -1,0 +1,11 @@
+[package]
+name = "tomasulo"
+version = "0.1.0"
+authors = ["naginikaido <1203794101@qq.com>"]
+edition = "2018"
+
+[dependencies]
+
+[[bin]]
+name = "tomasulo"
+path = "src/tomasulo.rs"
