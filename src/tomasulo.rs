@@ -6,7 +6,6 @@ mod platform;
 use std::io;
 
 fn main() {
-    let mut t = vec![1, 2, 3];
     let mut context = platform::Platform::new();
     loop {
         let mut input = String::new();
@@ -15,15 +14,14 @@ fn main() {
                 if n == 0 {
                     break
                 }
-                match input.split_whitespace().next() {
-                    Some(x) => context.load_inst(&x.to_string()),
-                    None => Ok(()),
-                };
+                if context.load_inst(&input.trim().to_string()).is_err() {
+
+                }
             }
             Err(error) => break,
         };
     }
-    while(!context.step()) {
+    while !context.step() {
         //thread::sleep_ms(500);
     }
 

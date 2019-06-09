@@ -7,7 +7,7 @@ const RES_COUNT: usize = 12;
 const INS_COUNT: usize = 6;
 const COM_COUNT: usize = 3;
 
-const upper_bound: [i32; COM_COUNT] = [3, 2, 2];
+const UPPER_BOUND: [i32; COM_COUNT] = [3, 2, 2];
 
 pub struct Platform {
     clock: usize,
@@ -116,7 +116,7 @@ impl Platform {
                             });
         for i in ready_list.into_iter() {
             let station = &mut self.stations[i];
-            if self.running_count[station.belong] < upper_bound[station.belong] {
+            if self.running_count[station.belong] < UPPER_BOUND[station.belong] {
                 println!("inst #{} exec.", station.inst);
                 self.running_count[station.belong] += 1;
                 station.state = StationState::EXEC;
@@ -244,7 +244,8 @@ impl Platform {
         }
 
         let mut param = pieces[1..].iter()
-                                .map(|piece| -> i32{
+                                .map(|_piece| -> i32{
+                                        let piece = _piece.trim();  
                                         if piece.chars().nth(0) == Some('F') { // it's a register
                                             u32::from_str_radix(piece.trim_start_matches("F"), 10).unwrap() as i32
                                         } else {
@@ -271,37 +272,37 @@ impl Platform {
 
 impl std::fmt::Display for Platform {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "Regs: [");
+        write!(f, "Regs: [")?;
         for (i,reg) in self.regs.iter().enumerate() {
             if i%4 == 0 {
-                write!(f, "\n    ");
+                write!(f, "\n    ")?;
             }
-            write!(f, "F{}: {}, ", i, reg);
+            write!(f, "F{}: {}, ", i, reg)?;
         }
-        write!(f, "\n]\n");
-        write!(f, "Stations: [\n");
+        write!(f, "\n]\n")?;
+        write!(f, "Stations: [\n")?;
 
         macro_rules! print_station {
             ($t:expr) => ({
-                write!(f,"{:^5}", state_to_string(&self.stations[$t].state));
+                write!(f,"{:^5}", state_to_string(&self.stations[$t].state))?;
                 if self.stations[$t].state != StationState::IDLE {
                     let inst = &self.inst[self.stations[$t].inst];
-                    write!(f, " #{:<2}{:^7}", self.stations[$t].inst, inst.inst_type.name);
+                    write!(f, " #{:<2}{:^7}", self.stations[$t].inst, inst.inst_type.name)?;
                     for (i,param) in self.stations[$t].params.iter().enumerate() {
                         if i != inst.inst_type.dest {
                             let tag = & self.stations[$t].tags[i];
                             match tag {
                                 Some(x) => {
-                                    write!(f, " Station {:2} ", x);
+                                    write!(f, " Station {:2} ", x)?;
                                 }
                                 None => {
-                                    write!(f, " 0x{:08x} ", param.unwrap());
+                                    write!(f, " 0x{:08x} ", param.unwrap())?;
                                 }
                             };
                         }
                     }
                 }
-                write!(f, "\n");
+                write!(f, "\n")?;
             })
         }
 
@@ -317,23 +318,23 @@ impl std::fmt::Display for Platform {
 
         for i in 0..6 {
             let t = i;
-            write!(f, "    Station {:2} / Ars {}: ", t, i);
+            write!(f, "    Station {:2} / Ars {}: ", t, i)?;
             print_station!(t);
             
         }
         for i in 0..3 {
             let t = i + 6;
-            write!(f, "    Station {:2} / Mrs {}: ", t, i);
+            write!(f, "    Station {:2} / Mrs {}: ", t, i)?;
             print_station!(t);
         }
-        write!(f, "]\n");
-        write!(f, "Load Buffers: [\n");
+        write!(f, "]\n")?;
+        write!(f, "Load Buffers: [\n")?;
         for i in 0..3 {
             let t = i + 9;
-            write!(f, "    Station {:2} / LB  {}: ", t, i);
+            write!(f, "    Station {:2} / LB  {}: ", t, i)?;
             print_station!(t);
         }
-        write!(f, "]\n");
+        write!(f, "]\n")?;
         write!(f, "\n")
     }
 
