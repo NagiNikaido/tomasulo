@@ -6,7 +6,7 @@ pub struct CommonDataBus {
 }
 
 impl CommonDataBus {
-    pub fn new() -> Self{
+    pub fn new() -> Self {
         CommonDataBus {
             busy: HashMap::new(),
             result: HashMap::new(),

@@ -3,7 +3,7 @@ pub type InstFunc = fn(&[i32]) -> Result<i32, i32>;
 #[derive(PartialEq)]
 pub enum ParamType {
     INSTANT,
-    REGISTER
+    REGISTER,
 }
 
 pub struct InstructionType {
@@ -12,11 +12,11 @@ pub struct InstructionType {
     pub param_type: &'static [ParamType],
     pub dest: usize,
     pub func: InstFunc,
-    pub stations: &'static [usize]
+    pub stations: &'static [usize],
 }
 
 impl Clone for InstructionType {
-    fn clone(&self) -> Self{
+    fn clone(&self) -> Self {
         InstructionType {
             name: self.name,
             cycles: self.cycles,
@@ -30,22 +30,23 @@ impl Clone for InstructionType {
 impl Copy for InstructionType {}
 
 impl InstructionType {
-    pub fn new(name: &'static str,
-               cycles: i32,
-               param_type: &'static [ParamType],
-               dest: usize,
-               func: InstFunc,
-               stations: &'static [usize]) -> Self{
+    pub fn new(
+        name: &'static str,
+        cycles: i32,
+        param_type: &'static [ParamType],
+        dest: usize,
+        func: InstFunc,
+        stations: &'static [usize],
+    ) -> Self {
         InstructionType {
             name: name,
             cycles: cycles,
             param_type: param_type,
             dest: dest,
             func: func,
-            stations: stations
+            stations: stations,
         }
     }
-    
 }
 
 pub struct Instruction {
@@ -54,7 +55,7 @@ pub struct Instruction {
     pub issue_time: i32,
     pub exec_time: i32,
     pub write_back_time: i32,
-    pub time_left: i32
+    pub time_left: i32,
 }
 
 impl Instruction {

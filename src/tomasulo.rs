@@ -1,7 +1,7 @@
 mod common_data_bus;
 mod instruction;
-mod reserve_station;
 mod platform;
+mod reserve_station;
 
 use std::io;
 
@@ -12,11 +12,9 @@ fn main() {
         match io::stdin().read_line(&mut input) {
             Ok(n) => {
                 if n == 0 {
-                    break
+                    break;
                 }
-                if context.load_inst(&input.trim().to_string()).is_err() {
-
-                }
+                if context.load_inst(&input.trim().to_string()).is_err() {}
             }
             Err(error) => break,
         };
@@ -26,6 +24,6 @@ fn main() {
     }
 
     println!("=============================");
-    
+
     context.print_inst_state();
 }

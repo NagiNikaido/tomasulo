@@ -15,12 +15,12 @@ pub struct ReserveStation {
     pub result: i32,
     pub time_left: i32,
     pub ready_punch: i32,
-    pub belong: usize
+    pub belong: usize,
 }
 
 impl ReserveStation {
     pub fn new(belong: usize) -> Self {
-        ReserveStation{
+        ReserveStation {
             params: Vec::new(),
             tags: Vec::new(),
             state: StationState::IDLE,
@@ -28,10 +28,10 @@ impl ReserveStation {
             result: 0,
             time_left: 0,
             ready_punch: 0,
-            belong: belong
+            belong: belong,
         }
     }
-    pub fn ready(&self) -> bool{
+    pub fn ready(&self) -> bool {
         for tag in self.tags.iter() {
             if tag.is_some() {
                 return false;
